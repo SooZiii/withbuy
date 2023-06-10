@@ -2,6 +2,17 @@ import React, { useState } from "react";
 import Autosuggest from "react-autosuggest";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import styled from "styled-components";
+
+const SearchButton = styled.button`
+  border: none;
+  background-color: transparent;
+`;
+
+const SearchContainer = styled.div`
+  display: flex;
+  align-items: baseline;
+`;
 
 export default function Search() {
   return <SearchBar />;
@@ -44,22 +55,39 @@ function SearchBar() {
 
   return (
     <div>
-      <Autosuggest
-        suggestions={suggestions}
-        onSuggestionsFetchRequested={onSuggestionsFetchRequested}
-        onSuggestionsClearRequested={onSuggestionsClearRequested}
-        onSuggestionSelected={onSuggestionSelected}
-        getSuggestionValue={(suggestion) => suggestion}
-        renderSuggestion={renderSuggestion}
-        inputProps={{
-          placeholder: "찾으시는 상품을 입력해주세요",
-          value: value,
-          onChange: (event, { newValue }) => setValue(newValue),
-        }}
-      />
-      <button onClick={handleSearch}>
-        <FontAwesomeIcon icon={faSearch} />
-      </button>
+      <div>
+        <SearchContainer>
+          <Autosuggest
+            suggestions={suggestions}
+            onSuggestionsFetchRequested={onSuggestionsFetchRequested}
+            onSuggestionsClearRequested={onSuggestionsClearRequested}
+            onSuggestionSelected={onSuggestionSelected}
+            getSuggestionValue={(suggestion) => suggestion}
+            renderSuggestion={renderSuggestion}
+            inputProps={{
+              placeholder: "찾으시는 상품을 입력해주세요",
+              value: value,
+              onChange: (event, { newValue }) => setValue(newValue),
+              className: "search-input",
+            }}
+          />
+          <SearchButton onClick={handleSearch}>
+            <FontAwesomeIcon icon={faSearch} />
+          </SearchButton>
+        </SearchContainer>
+      </div>
+      <style>
+        {`
+          .search-input {
+            width:22rem;
+            border: none;
+            border-bottom: 1px solid #f2f2f2;
+            padding: 2rem 2rem .5rem 2rem;
+            outline: none;
+            cursor: pointer;
+          }
+        `}
+      </style>
     </div>
   );
 }
